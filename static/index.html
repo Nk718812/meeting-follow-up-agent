@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Executive Meeting Follow-Up Agent</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <p class="eyebrow">MEETING INTELLIGENCE</p>
+      <h1>Executive Meeting<br><span>Follow-Up Agent</span></h1>
+      <p class="intro">Turn raw meeting notes into a clear, accountable follow-up—without inventing what wasn't said.</p>
+    </header>
+
+    <section class="input-card" aria-labelledby="notes-label">
+      <div class="label-row">
+        <label id="notes-label" for="notes">Meeting Notes or Transcript</label>
+        <span id="count">0 characters</span>
+      </div>
+      <textarea id="notes" maxlength="100000" placeholder="Paste your meeting notes or transcript here…"></textarea>
+      <div class="input-footer">
+        <p><strong>Accuracy first.</strong> Missing owners and dates will be clearly labeled, never guessed.</p>
+        <button id="analyze" type="button"><span>Analyze Meeting</span><span aria-hidden="true">→</span></button>
+      </div>
+      <p id="error" class="error" role="alert" hidden></p>
+    </section>
+
+    <section id="status" class="status" aria-live="polite" hidden>
+      <span class="spinner"></span><div><strong>Analyzing your meeting</strong><small>Extracting details, checking accuracy, and preparing the follow-up…</small></div>
+    </section>
+
+    <section id="results" class="results" hidden>
+      <div class="results-heading"><div><p class="eyebrow">ANALYSIS COMPLETE</p><h2>Meeting Follow-Up</h2></div><span id="quality" class="badge"></span></div>
+      <div class="grid">
+        <article class="panel"><h3><span>01</span> Key Decisions</h3><ul id="decisions"></ul></article>
+        <article class="panel"><h3><span>02</span> Unresolved Questions</h3><ul id="questions"></ul><div id="clarifications-wrap" hidden><h4>Needs clarification</h4><ul id="clarifications"></ul></div></article>
+      </div>
+      <article class="panel actions"><h3><span>03</span> Action Items</h3><div class="table-wrap"><table><thead><tr><th>Task</th><th>Owner</th><th>Deadline</th></tr></thead><tbody id="actions"></tbody></table></div></article>
+      <article class="panel email"><div class="email-heading"><h3><span>04</span> Draft Follow-Up Email</h3><button id="copy" type="button">Copy draft</button></div><pre id="email"></pre></article>
+      <p class="review-note">⚠ Human review required before sending</p>
+    </section>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>
