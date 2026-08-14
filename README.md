@@ -25,8 +25,8 @@ API usage is billed to the account associated with the key. The key stays on the
 
 ## Workflow
 
-1. **Extraction:** the server sends the notes to the OpenAI Responses API with a strict JSON schema and rules against guessing. Missing owners become `Unassigned`; missing deadlines become `Not specified`.
-2. **Quality check:** a separate call receives the original notes and proposed extraction. It checks support, omissions, assignment accuracy, and whether suggestions were mistaken for commitments.
+1. **Extraction:** the server sends the notes to the OpenAI Responses API with a strict JSON schema and rules against guessing. Statements about the same task are resolved chronologically into one item. A later statement replaces an earlier commitment only when it clearly establishes a new one; otherwise conflicting owners become `Unassigned`, conflicting deadlines become `Not specified`, and the conflict is surfaced for clarification.
+2. **Quality check:** a separate call receives the original notes and proposed extraction. It checks support, omissions, assignment accuracy, suggestions mistaken for commitments, unaccepted reassignments, and contradictory or superseded details left in definitive action items.
 3. **Revision:** when the judge fails the draft, a third call creates a complete corrected extraction using the original notes and the judge's feedback.
 4. **Final output:** the browser renders the structured result and draft email, with a human-review warning.
 

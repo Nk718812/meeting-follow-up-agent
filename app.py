@@ -7,7 +7,6 @@ from __future__ import annotations
 
 import json
 import os
-import re
 import urllib.error
 import urllib.request
 from http import HTTPStatus
@@ -67,13 +66,32 @@ decision, commitment, owner, or deadline. A suggestion is not a decision or acti
 For every action without an explicitly assigned owner use exactly 'Unassigned'; for
 every action without an explicitly stated deadline use exactly 'Not specified'. Put
 ambiguities in clarifications as concise requests for clarification. Draft a concise
-follow-up email based only on the extraction and include a reminder to review it."""
+follow-up email based only on the extraction and include a reminder to review it.
+
+Resolve the meeting chronologically before producing action_items. Group statements
+that refer to the same underlying task into one action item; never output competing or
+duplicate versions of that task as definitive commitments. A later statement supersedes
+an earlier owner or deadline only when it clearly establishes an accepted new
+commitment. A request, proposal, possibility, attempted reassignment, or statement that
+someone else will do the work is not acceptance by that person unless the notes support
+their acceptance. When conflicting statements leave the current owner unresolved, use
+exactly 'Unassigned'. When they leave the current deadline unresolved, use exactly
+'Not specified'. Describe each material conflict in unresolved_questions and/or
+clarifications, including what must be confirmed. Do not preserve an earlier owner or
+deadline as definitive merely because it was once agreed if later discussion makes the
+current commitment genuinely unclear."""
 
 JUDGE_INSTRUCTIONS = """You are an independent accuracy judge. Compare the proposed
 extraction with the original notes. Fail it if it contains unsupported claims, invented
 owners/deadlines, treats suggestions as commitments, or misses important explicit
 decisions/actions/questions. Feedback must be specific, actionable, and grounded only
-in the notes. Do not rewrite the extraction."""
+in the notes. Explicitly trace statements about the same task over time. Fail the draft
+if contradictory or superseded versions appear as duplicate definitive action items; if
+an unresolved owner or deadline is shown definitively instead of as 'Unassigned' or
+'Not specified'; if a proposed reassignment is treated as accepted without support; or
+if a material conflict is not surfaced for clarification. A later statement may replace
+an earlier one only when it clearly establishes a new commitment. Do not rewrite the
+extraction."""
 
 
 class ConfigurationError(RuntimeError):
